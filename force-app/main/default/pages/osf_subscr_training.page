@@ -1,0 +1,99 @@
+<apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false">
+    <div class="subsc_wrapper"></div>
+
+    <script id="subscr-tmpl" type="text/template">
+        <div class="task1">
+            <h3>Task 1</h3>
+            <p><b>Original:</b> {{pageLabelMap 'MyAccount_Name'}}</p>
+            <p><b>Result:</b> {{toLowerCase (pageLabelMap 'MyAccount_Name')}}</p>
+        </div>
+        <div class="task2">
+            <h3>Task 2</h3>
+
+            {{#each imageList}}
+            <div class="
+                {{#switch Size}}
+                {{#case 'Small' }}col-lg-2 size-small{{/case}}
+                {{#case 'Medium'}}col-md-6 col-lg-4 size-medium{{/case}} 
+                {{#case 'Big'}}col-md-6 col-lg-6 size-big{{/case}}
+                {{#default}}col-md-4 size-medium{{/default}}
+                {{/switch}}">
+
+                <div class="imageWrap">
+                    <img alt="" class="img-responsive" src="{{this.src}}">
+                </div>
+            </div>
+            {{/each}}
+
+        </div>
+    </script>
+    
+    <script>
+        jQuery(function($) {
+            CCRZ.models.TrainigModel = CCRZ.CloudCrazeModel.extend();
+            CCRZ.views.TrainingView = CCRZ.CloudCrazeView.extend({
+                viewName: 'TrainingView',
+                templateDesktop: CCRZ.util.template('subscr-tmpl'),
+
+                init: function() {
+                    this.initHelpers();
+                    this.render();
+                },
+
+                initHelpers: function() {
+                    Handlebars.registerHelper('toLowerCase', function(label) {
+                        var labelString = label.toString();
+                        return labelString.toLowerCase();
+                    });
+
+                    Handlebars.registerHelper('switch', function(value, options) {
+                        Handlebars.__switch_stack__ = [];
+                        Handlebars.__switch_stack__.push({
+                            switch_match : false,
+                            switch_value : value
+                        });
+
+                        var html = options.fn(this);
+                        Handlebars.__switch_stack__.pop();
+                        return html;
+                    });
+
+                    Handlebars.registerHelper('case', function(value, options) {
+                        var args = Array.from(arguments);
+                        var options = args.pop();
+                        var caseValues = args;
+                        var stack = Handlebars.__switch_stack__[Handlebars.__switch_stack__.length - 1];
+
+                        if (stack.switch_match || caseValues.indexOf( stack.switch_value ) === -1) {
+                            return '';
+                        } else {
+                            stack.switch_match = true;
+                            return options.fn( this );
+                        }
+                    });
+
+                    Handlebars.registerHelper( "default", function( options ) {
+                        var stack = Handlebars.__switch_stack__[Handlebars.__switch_stack__.length - 1];
+
+                        if (!stack.switch_match) {
+                            return options.fn(this);
+                        }
+                    });
+                },
+
+                renderDesktop: function() {
+                    this.$el.html(this.templateDesktop(this.model.toJSON()));
+                }
+            })
+
+            CCRZ.trainigModel = new CCRZ.models.TrainigModel({
+                imageList: [
+                    {Size: 'Small', src: 'https://via.placeholder.com/500'},
+                    {Size: 'Medium', src: 'https://via.placeholder.com/500'},
+                    {Size: 'Big', src: 'https://via.placeholder.com/500'}
+                ]
+            })
+            CCRZ.trainingView = new CCRZ.views.TrainingView({el: '.subsc_wrapper', model: CCRZ.trainigModel});
+        });
+    </script>
+</apex:page>
