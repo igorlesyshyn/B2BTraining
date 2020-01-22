@@ -37,23 +37,6 @@ sfdx-project.json
 *.log
 coverage
 
-# ignore classes, components, pages, static resources and metas from salesforce...
-/lwc
-*.cls
-*.cls-meta.xml
-*.component
-*.component-meta.xml
-*.page
-*.page-meta.xml
-*.resource
-*.resource-meta.xml
-*.trigger
-*.trigger-meta.xml
-*.flow
-*.flowDefinition
-*.workflow
-*.field-meta.xml
-
 # ...with the exception of the package.xml and anything that starts with the naming convention
 !package.xml
 !ckz54_*
