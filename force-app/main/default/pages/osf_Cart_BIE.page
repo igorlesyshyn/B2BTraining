@@ -1,3 +1,11 @@
 <apex:page docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag="false">
     <c:osf_cart_detail/> 
+
+    <script>
+        CCRZ.pubSub.on('view:CartDetailView:refresh', function() {
+            $('.deleteItem').on('click', function() {
+                alert('Delete button was clicked!');
+            });
+        })
+    </script>
 </apex:page>
