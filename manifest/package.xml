@@ -11,7 +11,7 @@
         <name>ApexTrigger</name>
     </types>
     <types>
-        <members>*</members>
+        <members>osf_cart_detail</members>
         <name>ApexComponent</name>
     </types>
     <types>
