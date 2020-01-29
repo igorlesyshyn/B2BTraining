@@ -11,8 +11,19 @@
 // to provide the whole object copy.
 //
 // OVERRIDES START HERE
-// CCRZ.uiProperties = $.extend(true,CCRZ.uiProperties,{
-//     //Overriden partial objects here
-// });
+CCRZ.uiProperties = $.extend(true, CCRZ.uiProperties,{
+    productDetailView: {
+        desktop: {
+            tmpl: 'osf_ProductDetail-Desktop'
+        },
+    },
+
+    slider: {
+        desktop: {
+            template: 'osf_slider_template'
+        }
+    }
+});
+
 
 // OVERRIDES END HERE
