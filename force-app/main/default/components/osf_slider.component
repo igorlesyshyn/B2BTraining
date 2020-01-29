@@ -1,0 +1,37 @@
+<apex:component>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <script id="osf_slider_template" type="text/template">
+        <div class="slider">
+            {{#each imageList}}
+                <div>
+                    <img src="{{src}}"/>
+                </div>
+            {{/each}}
+        </div>
+    </script>
+
+    <script>
+        jQuery(function($) {
+            CCRZ.views.SliderView = CCRZ.CloudCrazeView.extend({
+                viewName: 'SliderView',
+                template: CCRZ.util.template(CCRZ.uiProperties.slider.desktop.template),
+
+                init: function() {
+                    this.render();
+                },
+
+                render: function() {
+                    this.$el.html(this.template(this.model.toJSON()));
+                    this.initSlider();
+                    return this;
+                },
+
+                initSlider: function() {
+                    this.$el.find('.slider').slick();
+                }
+            });
+        });
+    </script>
+</apex:component>
